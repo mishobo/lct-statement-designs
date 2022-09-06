@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 3.7.5  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="grouped_transactions" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="357"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="643"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="V2-localhost-db"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="member_number" class="java.lang.String"/>
+	<parameter name="fromDate" class="java.lang.String"/>
+	<parameter name="toDate" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT v.member_name, v.member_number, v.benefit_name, v.payer_id , v.total_invoice_amount, v.invoice_number, bb.initial_limit , 
+		date(v.created_at) as invoiceDate, v.hospital_provider_id FROM visit v inner join benefit_beneficiary bb on bb.benefit_id = v.benefit_id 
+		where v.member_number like concat(substring_index($P{member_number}, "-", 1), '%') and bb.member_number = $P{member_number} and 
+		date(v.created_at) >= $P{fromDate} and date(v.created_at) <= $P{toDate}  order by v.benefit_id asc]]>
+	</queryString>
+	<field name="member_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="member_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="member_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="member_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="benefit_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="benefit_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="payer_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="payer_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="total_invoice_amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="total_invoice_amount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="invoice_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="invoice_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="initial_limit" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="initial_limit"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="benefit_beneficiary"/>
+	</field>
+	<field name="invoiceDate" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="invoiceDate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="hospital_provider_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="NAME"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="hospital_provider_id"/>
+	</field>
+	<sortField name="benefit_name" order="Descending"/>
+	<variable name="Grp_SUM" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupService" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_invoice_amount}]]></variableExpression>
+	</variable>
+	<variable name="Grp_MINUS" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupService">
+		<variableExpression><![CDATA[$F{initial_limit}.subtract( $V{Grp_SUM} )]]></variableExpression>
+	</variable>
+	<group name="GroupService">
+		<groupExpression><![CDATA[$F{benefit_name}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<staticText>
+					<reportElement x="2" y="3" width="118" height="19">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73638b31-d1c2-47c7-b396-d35ddd4d173f"/>
+					</reportElement>
+					<textElement textAlignment="Left" lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MEMBER NAME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="120" y="2" width="100" height="20">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fde795e8-ab01-41e1-83a1-50513e607f86"/>
+					</reportElement>
+					<textElement lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MEMBER NUMBER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="220" y="2" width="120" height="20">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="14874ec3-d1ed-4a4c-903c-4b96491ae73d"/>
+					</reportElement>
+					<textElement textAlignment="Left" lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[BENEFIT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="340" y="3" width="200" height="19">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f51aef9-cb51-479a-91ee-d8d936f05bba"/>
+					</reportElement>
+					<textElement textAlignment="Left" lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PAYER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="540" y="3" width="50" height="19">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4d09c16-c208-43f3-b9a2-6afdc7db35b9"/>
+					</reportElement>
+					<textElement textAlignment="Left" lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DATE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="590" y="2" width="110" height="20">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bc3d8958-d7ab-4f41-8b07-9d8f9efc8e31"/>
+					</reportElement>
+					<textElement textAlignment="Left" lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PROVIDER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="700" y="3" width="78" height="19">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9af74d62-3cdf-48bd-ac82-7e7da8d5fcde"/>
+					</reportElement>
+					<textElement textAlignment="Right" lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[AMOUNT]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="39">
+				<rectangle>
+					<reportElement x="1" y="0" width="777" height="24">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="640" y="0" width="90" height="10"/>
+					<textElement lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Utilization]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="717" y="0" width="61" height="10"/>
+					<textElement textAlignment="Right" lineSpacing="Single">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{Grp_SUM}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="640" y="13" width="90" height="12"/>
+					<textElement lineSpacing="Single">
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Balance ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="717" y="13" width="60" height="12"/>
+					<textElement textAlignment="Right" lineSpacing="Single">
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$V{Grp_MINUS}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="59" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="800" height="59"/>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<image>
+				<reportElement x="330" y="0" width="199" height="59"/>
+				<imageExpression class="java.lang.String"><![CDATA["https://raw.githubusercontent.com/nelsonkimaiga/bookish-rotary-phone/master/img/lct_logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="48" splitType="Stretch">
+			<textField>
+				<reportElement x="40" y="10" width="210" height="18"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{payer_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="10" width="80" height="20"/>
+				<textElement lineSpacing="Single">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SCHEME :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="520" y="0" width="59" height="22"/>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[From Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="570" y="2" width="90" height="22"/>
+				<textElement textAlignment="Right" lineSpacing="Single"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fromDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="680" y="1" width="50" height="20"/>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[To Date :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="700" y="2" width="79" height="18"/>
+				<textElement textAlignment="Right" lineSpacing="Single"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{toDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="330" y="3" width="150" height="20"/>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MEMBER STATEMENT]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="23" width="777" height="24"/>
+			</rectangle>
+			<textField>
+				<reportElement x="220" y="28" width="300" height="15"/>
+				<textElement textAlignment="Center" lineSpacing="Single">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{benefit_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="648" y="25" width="75" height="20"/>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALLOCATION :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="700" y="25" width="78" height="20"/>
+				<textElement textAlignment="Right" lineSpacing="Single">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{initial_limit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="118" height="20">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73638b31-d1c2-47c7-b396-d35ddd4d173f"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{member_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="100" height="20">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fde795e8-ab01-41e1-83a1-50513e607f86"/>
+				</reportElement>
+				<textElement lineSpacing="Single">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{member_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="0" width="118" height="20">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="14874ec3-d1ed-4a4c-903c-4b96491ae73d"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{benefit_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="-2" width="200" height="21">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9f51aef9-cb51-479a-91ee-d8d936f05bba"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{payer_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="540" y="-2" width="50" height="21">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c4d09c16-c208-43f3-b9a2-6afdc7db35b9"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoiceDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="590" y="-3" width="110" height="19">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bc3d8958-d7ab-4f41-8b07-9d8f9efc8e31"/>
+				</reportElement>
+				<textElement textAlignment="Left" lineSpacing="Single">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{hospital_provider_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="-2" width="78" height="21">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9af74d62-3cdf-48bd-ac82-7e7da8d5fcde"/>
+				</reportElement>
+				<textElement textAlignment="Right" lineSpacing="Single">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{total_invoice_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="56" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="45" splitType="Stretch"/>
+	</summary>
+</jasperReport>
