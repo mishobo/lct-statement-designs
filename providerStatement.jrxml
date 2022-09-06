@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 3.7.5  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="providerStatement" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="V2-localhost-db"/>
+	<parameter name="providerId" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select V.member_name, V.member_number, v.benefit_name, v.total_invoice_amount, date(v.created_at) as created_at, v.invoice_number, 
+		v.hospital_provider_id, v.payer_id from visit v where v.hospital_provider_id = $P{providerId}]]>
+	</queryString>
+	<field name="member_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="member_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="member_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="member_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="benefit_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="benefit_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="total_invoice_amount" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="total_invoice_amount"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="created_at" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="created_at"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="invoice_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="invoice_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="hospital_provider_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="hospital_provider_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<field name="payer_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="payer_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="visit"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="380" y="20" width="100" height="50"/>
+				<imageExpression class="java.lang.String"><![CDATA["https://raw.githubusercontent.com/nelsonkimaiga/bookish-rotary-phone/master/img/lct_logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="75" splitType="Stretch">
+			<textField>
+				<reportElement x="200" y="10" width="180" height="30"/>
+				<textElement lineSpacing="Single"/>
+				<textFieldExpression class=""><![CDATA[$F{hospital_provider_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="10" width="120" height="30"/>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[SERVICE PROVIDER :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="40" width="100" height="30"/>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[PAYER:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="40" width="200" height="30"/>
+				<textElement lineSpacing="Single"/>
+				<textFieldExpression class=""><![CDATA[$F{payer_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="580" y="10" width="100" height="20"/>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[from Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="40" width="100" height="20"/>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[To Date :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="150" height="20">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="97665ea9-dab8-4062-8959-21a232f928b8"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[PATIENT NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="2" width="100" height="18">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d848929b-65b8-41a6-a9d1-485443d2a0ac"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[MEMBER NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="2" width="150" height="18">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5ea18cc8-bcd9-4c3d-930d-dd744fda1d19"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[BENEFIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="670" y="4" width="107" height="16">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22424bc1-38aa-4e1b-a6f1-a6969f3c8a67"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[AMOUNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="2" width="90" height="18">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5904a4f3-7f8f-4e40-9135-0e5b46ddb09f"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="4" width="100" height="16">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd73c08f-dc4f-46ac-b6da-c7a1e2571218"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<text><![CDATA[INVOICE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="150" height="20">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="97665ea9-dab8-4062-8959-21a232f928b8"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{member_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="-2" width="100" height="20">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d848929b-65b8-41a6-a9d1-485443d2a0ac"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{member_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="150" height="18">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5ea18cc8-bcd9-4c3d-930d-dd744fda1d19"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{benefit_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="670" y="0" width="121" height="20">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22424bc1-38aa-4e1b-a6f1-a6969f3c8a67"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{total_invoice_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="2" width="90" height="16">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5904a4f3-7f8f-4e40-9135-0e5b46ddb09f"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{created_at}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="100" height="18">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd73c08f-dc4f-46ac-b6da-c7a1e2571218"/>
+				</reportElement>
+				<textElement lineSpacing="Single"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_number}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
